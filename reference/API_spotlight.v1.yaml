@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: API_spotlight
+  version: '1.0'
+  contact:
+    name: Jorge Larrondo
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /users/create:
+    post:
+      summary: ''
+      operationId: post-users-create
+      responses:
+        '201':
+          description: Created
+      description: Create a new user
+      security:
+        - API Key - 1: []
+      parameters: []
+  /login:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-login
+      description: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Users'
+  /items/create:
+    post:
+      summary: ''
+      operationId: post-items-create
+      responses:
+        '201':
+          description: Created
+      description: Create a new item
+  '/items/:itemId':
+    put:
+      summary: ''
+      operationId: 'put-items-:itemId'
+      responses:
+        '200':
+          description: OK
+      description: Modify an item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Items'
+    delete:
+      summary: ''
+      operationId: 'delete-items-:itemId'
+      responses:
+        '200':
+          description: OK
+      description: Delete an item
+  '/items/search/:searchOption':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: 'get-items-search-:searchOption'
+      description: Search an item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Items'
+components:
+  schemas:
+    Users:
+      title: Users
+      type: object
+      properties:
+        id:
+          type: number
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+          minLength: 6
+      x-examples:
+        example-1:
+          id: 0
+          username: string
+          password: pa$$word
+    Items:
+      title: Items
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        location:
+          type: object
+          properties:
+            city:
+              type: string
+            country:
+              type: string
+        askingPrice:
+          type: string
+        dateOfPosting:
+          type: string
+        deliveryType:
+          type: object
+          properties:
+            shipping:
+              type: boolean
+            pickUp:
+              type: boolean
+        additionalInfos:
+          type: string
+      x-examples:
+        example-1:
+          id: 0
+          title: string
+          description: string
+          category: string
+          location:
+            city: string
+            country: string
+          askingPrice: string
+          dateOfPosting: string
+          deliveryType:
+            shipping: true
+            pickUp: true
+          additionalInfos: string
+  securitySchemes:
+    API Key - 1:
+      name: API Key
+      type: apiKey
+      in: query
